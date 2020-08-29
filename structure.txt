@@ -1,0 +1,16 @@
+1. Logo
+2. Splash Screen
+3. Intro Slides
+4. Profile Screen
+5. Permission Screens
+6. Home Screen
+7. Send Screen (Show Files , Waves)
+8. Receive Screen (Waiting Screen)
+9. Popup Screen (Accept the connection)
+10. Progress Screen (At the end Success/Failure)
+
+kPrimaryColor = Color(0xFF4a4a86)
+fontFace = Avenir-Medium
+
+Type of Files :-
+Images, Videos, Documents, Apps, Music, Other
