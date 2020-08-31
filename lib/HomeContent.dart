@@ -2,6 +2,7 @@ import 'package:airshare/Profile.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:file_picker/file_picker.dart';
+import 'package:airshare/About.dart';
 
 class HomeContent extends StatefulWidget {
   @override
@@ -9,6 +10,7 @@ class HomeContent extends StatefulWidget {
 }
 
 class _HomeContentState extends State<HomeContent> {
+  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
   var selectedCard = 'WEIGHT';
   String heroTag = 'assets/ProfilePicture1.jpg';
   String userName = 'User';
@@ -35,18 +37,17 @@ class _HomeContentState extends State<HomeContent> {
   Widget build(BuildContext context) {
     return SafeArea(
         child: Scaffold(
+            key: _scaffoldKey,
             backgroundColor: Color(0xFF7A9BEE),
             appBar: AppBar(
               backgroundColor: Colors.transparent,
               elevation: 0.0,
               leading: GestureDetector(
                 onTap: () {
-                  Navigator.push(context,
-                          MaterialPageRoute(builder: (context) => Profile()))
-                      .then((_) => setUserState());
+                  _scaffoldKey.currentState.openDrawer();
                 },
                 child: Icon(
-                  Icons.account_circle,
+                  Icons.menu,
                 ),
               ),
               title: Text('AirShare',
@@ -55,13 +56,78 @@ class _HomeContentState extends State<HomeContent> {
                       fontSize: 18.0,
                       color: Colors.white)),
               centerTitle: true,
-              actions: <Widget>[
-                IconButton(
-                  icon: Icon(Icons.more_horiz),
-                  onPressed: () {},
-                  color: Colors.white,
+              actions: [
+                Padding(
+                  padding: const EdgeInsets.only(right: 13.0),
+                  child: GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => Profile()))
+                          .then((_) => setUserState());
+                    },
+                    child: Icon(
+                      Icons.account_circle,
+                    ),
+                  ),
                 )
               ],
+            ),
+            drawer: Drawer(
+              child: ListView(
+                padding: EdgeInsets.zero,
+                children: <Widget>[
+                  DrawerHeader(
+                    child: Center(
+                      child: Text(
+                        'AirShare',
+                        style: TextStyle(fontSize: 25, color: Colors.white),
+                      ),
+                    ),
+                    decoration: BoxDecoration(
+                      image: DecorationImage(
+                        image: AssetImage('assets/drawerBg.jpg'),
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                  ),
+                  ListTile(
+                    leading: GestureDetector(
+                      onTap: () {
+                        Navigator.pop(context);
+                      },
+                      child: Icon(
+                        Icons.home,
+                      ),
+                    ),
+                    title: Text('Home'),
+                    onTap: () {
+                      Navigator.pop(context);
+                    },
+                  ),
+                  ListTile(
+                    leading: GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => About()))
+                            .then((_) => setUserState());
+                      },
+                      child: Icon(
+                        Icons.info,
+                      ),
+                    ),
+                    title: Text('About'),
+                    onTap: () {
+                      Navigator.push(context,
+                              MaterialPageRoute(builder: (context) => About()))
+                          .then((_) => setUserState());
+                    },
+                  ),
+                ],
+              ),
             ),
             body: ListView(children: [
               Stack(children: [
